@@ -1,0 +1,28 @@
+{
+  "name": "ts-logger",
+  "version": "0.1.0",
+  "description": "An experimental logger library for NodeJS written in TypeScript",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "transpile": "node_modules/typescript/bin/tsc -p tsconfig.prod.json",
+    "postinstall": "npm run transpile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cubodehelio/ts-logger"
+  },
+  "author": "Juan M. Cañabate [@cubodehelio]",
+  "license": "ISC",
+  "homepage": "https://github.com/cubodehelio/ts-logger#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "lodash.iserror": "^3.1.1",
+    "node-uuid": "^1.4.7",
+    "on-finished": "^2.3.0"
+  },
+  "devDependencies": {
+    "tslint": "^3.10.2",
+    "typescript": "^1.8.10"
+  }
+}

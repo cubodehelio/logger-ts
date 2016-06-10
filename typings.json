@@ -1,0 +1,16 @@
+{
+  "name": "amadeus-logger",
+  "dependencies": {},
+  "globalDependencies": {
+    "chalk": "registry:dt/chalk#0.4.0+20160317120654",
+    "express": "registry:dt/express#4.0.0+20160317120654",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160602151406",
+    "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "node": "registry:dt/node#6.0.0+20160602155235",
+    "node-uuid": "registry:dt/node-uuid#0.0.0+20160316155526",
+    "node-uuid/node-uuid-base": "registry:dt/node-uuid/node-uuid-base#0.0.0+20160316155526",
+    "node-uuid/node-uuid-cjs": "registry:dt/node-uuid/node-uuid-cjs#0.0.0+20160316155526",
+    "on-finished": "registry:dt/on-finished#2.2.0+20160317120654",
+    "serve-static": "registry:dt/serve-static#0.0.0+20160606155157"
+  }
+}

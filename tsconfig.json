@@ -1,0 +1,20 @@
+// Default transpiler (`tsc`) settings for development.
+// Run this with `tsc -p .` or with `ctrl+shift+b` in Visual Studio Code
+//
+//   - writes source maps
+//   - watch for changes in the source
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "watch": true
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
