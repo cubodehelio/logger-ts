@@ -12,6 +12,7 @@ $ npm install ts-logger
 
 * Clone this repo `git clone https://github.com/cubodehelio/ts-logger.git`.
 * Install deps: `npm install`
+* typings install
 
 ## Transpile
 

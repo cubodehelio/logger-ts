@@ -5,8 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "transpile": "node_modules/typescript/bin/tsc -p tsconfig.prod.json",
-    "postinstall": "npm run transpile"
+    "transpile": "node_modules/typescript/bin/tsc -p tsconfig.prod.json"
   },
   "repository": {
     "type": "git",
