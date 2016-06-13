@@ -37,5 +37,5 @@ By now the vsc build task just fires `tcs -p .` command in the project root, whi
 
 + Extend `ExpressRequest` type from node IncommingMessage (?).
 + Extend `ExpressResponse` type from node ServerResponse (?).
-+ Make Grunt bassed build system for transpilation, release, etc..
++ Make Grunt based build system for transpilation, release, etc..
 + Should the traspilation be made with babel?
