@@ -1,7 +1,8 @@
 node_modules
 .vscode
-lib
-typings
+/lib
+index.ts
+/typings
 .vscode
 tsconfig.*
 typings.json
