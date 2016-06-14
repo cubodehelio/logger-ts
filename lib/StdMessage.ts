@@ -2,25 +2,9 @@ import {inspect} from "util";
 import {basename} from "path";
 import * as chalk from 'chalk';
 
+import {LogType, std, StackData} from "./types";
+
 const isError = require("lodash.iserror");
-
-type LogType = "ERROR" | "WARN" | "INFO" | "LOG" | "DEBUG" | "SILLY";
-
-/**
- * Declare the NodeJS standar outputs.
- */
-type std = "out" | "err";
-
-interface StackData {
-  method: string;
-  fullPath: string;
-  path: string;
-  line: number;
-  pos: number;
-  file: string;
-  stack: Array<string>;
-}
-
 
 function getStackData(stackOffset: number): StackData {
   stackOffset = stackOffset || 0;
@@ -92,8 +76,8 @@ export default class StdMessage {
         msg = chalk.red(inspect(msg, { depth: inspectDepth }));
       }
       else {
-        // dont inspect if is a string so we dont lose format
-        msg = (typeof msg === 'string')? chalk.green(msg) : inspect(msg, { colors: chalk.supportsColor, depth: inspectDepth });
+        // avoid inspecting strings so we dont lose format
+        msg = (typeof msg === 'string') ? chalk.green(msg) : inspect(msg, { colors: chalk.supportsColor, depth: inspectDepth });
       }
 
       message = message.concat(msg).concat(" ");
