@@ -6,14 +6,13 @@ import HttpContext from "./HttpContext";
 import Logger from "./Logger";
 
 type NextFn = express.NextFunction;
-type Handler = express.Handler;
 
 import {ExpressRequest, ExpressResponse} from "./types";
 
 /**
  * Middleware
  */
-export function middleware(): Handler {
+export function middleware(): express.Handler {
 
   let logger = new Logger();
 
