@@ -1,11 +1,27 @@
-/**
- * Declare some missing types so typescript transpiler don't cry.
- * 
- * TODO: test whether it works extending `express.Request`
- * from a NodeJS Server IncommingMessage or so..
- */
-
 import * as express from "express";
+
+/**
+ * Available levels for the logger
+ */
+export type LogType = "ERROR" | "WARN" | "INFO" | "LOG" | "DEBUG" | "SILLY";
+
+/**
+ * Declare the NodeJS standar outputs.
+ */
+export type std = "out" | "err";
+
+/**
+ * shape of the stack data object 
+ */
+export interface StackData {
+  method: string;
+  fullPath: string;
+  path: string;
+  line: number;
+  pos: number;
+  file: string;
+  stack: Array<string>;
+}
 
 /**
  * missing declarations in express.Request types

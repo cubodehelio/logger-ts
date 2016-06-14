@@ -1,13 +1,15 @@
 {
   "name": "ts-logger",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "An experimental logger library for NodeJS written in TypeScript",
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run typings && npm run transpile",
+    "prepublish": "npm run typings && npm run bundle",
     "typings": "node_modules/typings/dist/bin.js install",
-    "transpile": "node_modules/typescript/bin/tsc -p tsconfig.prod.json"
+    "build": "rm -rf dist && node_modules/typescript/bin/tsc -p tsconfig.build.json --declaration",
+    "bundle": "npm run build && typings bundle -o dist/types.d.ts"
   },
   "repository": {
     "type": "git",
