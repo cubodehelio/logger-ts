@@ -2,17 +2,17 @@
 // Run this with `tsc -p tsconfig.prod.json` or if you want to change
 // the destination folder: e.g: `tsc -p tsconfig.prod.json --outDir your/directory`
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "allowSyntheticDefaultImports": true,
-        "sourceMap": false,
-        "moduleResolution": "node",
-        "outDir": "dist",
-        "watch": false
-    },
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "watch": false
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

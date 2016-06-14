@@ -4,17 +4,17 @@
 //   - writes source maps
 //   - watch for changes in the source
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "allowSyntheticDefaultImports": true,
-        "sourceMap": true,
-        "moduleResolution": "node",
-        "outDir": "dist",
-        "watch": true
-    },
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "watch": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
