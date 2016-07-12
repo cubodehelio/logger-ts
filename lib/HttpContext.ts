@@ -34,7 +34,7 @@ export default class HttpContext {
 
 
   referrer() {
-    return this.req.get('referer') || this.req.get('referrer');
+    return this.req.get("referer") || this.req.get("referrer");
   }
 
   /**
@@ -42,22 +42,22 @@ export default class HttpContext {
    */
 
   remoteAddr() {
-    return getIp(this.req).replace('::ffff:', "");
+    return getIp(this.req).replace("::ffff:", "");
   }
 
   httpVersion(): string {
-    return this.req.httpVersionMajor + '.' + this.req.httpVersionMinor;
+    return this.req.httpVersionMajor + "." + this.req.httpVersionMinor;
   }
 
   userAgent() {
-    return this.req.get('user-agent');
+    return this.req.get("user-agent");
   }
 
   reqHeader(field) {
     // get header
     let header = this.req.get[field]
 
-    return Array.isArray(header) ? header.join(', ') : header
+    return Array.isArray(header) ? header.join(", ") : header
   }
 
   resHeader(field) {
@@ -68,7 +68,7 @@ export default class HttpContext {
     let header: string | Array<string>;
 
     header = this.res.get(field);
-    return Array.isArray(header) ? header.join(', ') : header;
+    return Array.isArray(header) ? header.join(", ") : header;
   }
 
 } 

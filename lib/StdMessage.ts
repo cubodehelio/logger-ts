@@ -1,6 +1,6 @@
 import {inspect} from "util";
 import {basename} from "path";
-import * as chalk from 'chalk';
+import * as chalk from "chalk";
 
 import {LogType, std, StackData} from "./types";
 
@@ -11,7 +11,7 @@ function getStackData(stackOffset: number): StackData {
 
   let stackReg = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i,
     stackReg2 = /at\s+()(.*):(\d*):(\d*)/i,
-    stacklist = (new Error()).stack.split('\n'),
+    stacklist = (new Error()).stack.split("\n"),
 
     s = stacklist[stackOffset] || stacklist[0],
     sp = stackReg.exec(s) || stackReg2.exec(s)
@@ -77,7 +77,7 @@ export default class StdMessage {
       }
       else {
         // avoid inspecting strings so we dont lose format
-        msg = (typeof msg === 'string') ? chalk.green(msg) : inspect(msg, { colors: chalk.supportsColor, depth: inspectDepth });
+        msg = (typeof msg === "string") ? chalk.green(msg) : inspect(msg, { colors: chalk.supportsColor, depth: inspectDepth });
       }
 
       message = message.concat(msg).concat(" ");

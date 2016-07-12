@@ -1,5 +1,6 @@
 import StdMessage from "./StdMessage";
 import Middleware from "./Middleware";
+import * as fs from "fs";
 
 /**
  * Declare the NodeJS standar outputs.
@@ -14,8 +15,21 @@ type std = "out" | "err";
  */
 export default class Logger {
 
-  constructor() {
-    
+  private fstream: fs.WriteStream;
+
+  constructor(tofile?: string) {
+
+    if (tofile) {
+
+      this.fstream = fs.createWriteStream(tofile, "utf8");
+      this.fstream.on("error", (err) => {
+
+        throw err;
+
+      });
+
+    }
+
   }
 
   public error(...messages) {
@@ -57,8 +71,18 @@ export default class Logger {
    * @param parameters rest parameters you want to log
    */
   private print(stdMessage: StdMessage) {
-    let processStream = "std" + stdMessage.std;
-    process[processStream].write(stdMessage.toString());
+    
+    if (this.fstream) {
+
+      this.fstream.write(stdMessage.toString());
+
+    } else {
+
+      let processStream = "std" + stdMessage.std;
+      process[processStream].write(stdMessage.toString());
+
+    }
+
   }
 
   public err(...messages){
