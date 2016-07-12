@@ -89,6 +89,10 @@ export default class Logger {
     return this.error(...messages);
   }
 
+  public warning(...messages){
+    return this.warn(...messages);
+  }
+
   public middleware(){
     
   }

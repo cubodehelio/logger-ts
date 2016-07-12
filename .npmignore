@@ -6,3 +6,5 @@ index.ts
 .vscode
 tsconfig.*
 typings.json
+logs
+dist/**/*.map

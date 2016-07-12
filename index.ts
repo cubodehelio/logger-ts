@@ -4,7 +4,7 @@ import * as path from "path";
 
 let tofile: string;
 
-let file = minimist(process.argv.slice(2))["tsloger-file"];
+let file = minimist(process.argv.slice(2))["tslogger-file"];
 
 if (file) {
 

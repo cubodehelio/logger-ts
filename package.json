@@ -1,13 +1,13 @@
 {
   "name": "ts-logger",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0-alpha.2",
   "description": "An experimental logger library for NodeJS written in TypeScript",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run typings && npm run transpile",
     "typings": "node_modules/typings/dist/bin.js install",
-    "transpile": "node_modules/typescript/bin/tsc -p tsconfig.prod.json"
+    "transpile": "rm dist -rf && node_modules/typescript/bin/tsc -p tsconfig.prod.json"
   },
   "repository": {
     "type": "git",
