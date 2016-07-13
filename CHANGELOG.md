@@ -1,3 +1,7 @@
+# v0.2.0-alpha.3
+
++ add *write-to-file* support for the logger middleware
+
 # v0.2.0-alpha.2
 
 + fix *write-to-file* feature
