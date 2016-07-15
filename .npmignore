@@ -8,3 +8,5 @@ tsconfig.*
 typings.json
 dist/**/*.ts
 !dist/types.d.ts
+logs
+dist/**/*.map

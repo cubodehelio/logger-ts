@@ -2,10 +2,26 @@
 
 An experimental logger library for NodeJS written in TypeScript (__working progress__).
 
+-------------------------------------------------------------------------------
+**v0.2.0-alpha1** has a very basic experimental support for writing logs to files. This can be enabled using the flag `--tslogger-file "cwd/relative/path"`.
+
+* The directory MUST exist.
+* Logs files are recreated when the process start (messages are not appended!).
+* Use: `$ node program.js --tslogger-file "my/logs.log" --no-colors`.
+------------------------------------------------------------------------------- 
+
 ## Use
 
 ```sh
 $ npm install ts-logger
+```
+
+```js
+const logger = require("ts-logger").logger();
+
+/* methdos: error/err | warn/warning | info | log | debug | silly */
+logger.log("hello world");
+
 ```
 
 ## Development

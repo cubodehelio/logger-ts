@@ -2,3 +2,7 @@ node_modules
 dist
 typings/**
 npm-debug.log
+tmp.js
+tmp.ts
+logs
+*.log

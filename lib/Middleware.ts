@@ -1,6 +1,8 @@
 import * as express from "express";
 import * as onFinished from "on-finished";
 import * as uuid from "node-uuid";
+import * as minimist from "minimist";
+import * as path from "path";
 
 import HttpContext from "./HttpContext";
 import Logger from "./Logger";
@@ -14,7 +16,17 @@ import {ExpressRequest, ExpressResponse} from "./types";
  */
 export function middleware(): express.Handler {
 
-  let logger = new Logger();
+  let tofile: string;
+
+  let file = minimist(process.argv.slice(2))["tslogger-file"];
+
+  if (file) {
+
+    tofile = path.resolve(process.cwd(), String(file));
+
+  }
+
+  let logger = new Logger(tofile);
 
   return (req: ExpressRequest, res: ExpressResponse, next: NextFn) => {
     let startTime = new Date().getTime();
