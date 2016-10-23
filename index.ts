@@ -1,10 +1,10 @@
-import Logger from "./lib/Logger";
-import * as minimist from "minimist";
-import * as path from "path";
+import Logger from './lib/Logger';
+import * as minimist from 'minimist';
+import * as path from 'path';
 
 let tofile: string;
 
-let file = minimist(process.argv.slice(2))["tslogger-file"];
+let file = minimist(process.argv.slice(2))['tslogger-file'];
 
 if (file) {
 
@@ -19,4 +19,4 @@ export function logger () {
 
 }
 
-export {middleware} from "./lib/Middleware";
+export {middleware} from './lib/Middleware';

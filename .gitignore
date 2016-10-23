@@ -6,3 +6,4 @@ tmp.js
 tmp.ts
 logs
 *.log
+.vscode

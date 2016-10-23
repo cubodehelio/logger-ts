@@ -1,6 +1,6 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-  "files.trimTrailingWhitespace": false,
+  "files.trimTrailingWhitespace": true,
   // Configure glob patterns for excluding files and folders.
   "files.exclude": {
     "**/.git": true,
@@ -17,6 +17,13 @@
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
   "editor.formatOnType": true,
+  "editor.rulers": [
+    80
+  ],
+  "editor.wrappingColumn": 80,
+  "editor.wordWrap": true,
+  "editor.renderIndentGuides": true,
+  "editor.mouseWheelZoom": true,
   // Configure glob patterns for excluding files and folders in searches.
   // Inherits all glob patterns from the files.exclude setting.
   "search.exclude": {
@@ -24,4 +31,11 @@
     "**/bower_components": true,
     ".built": true
   }
+,
+"typescript.check.workspaceVersion": false,
+"explorer.openEditors.visible": 0,
+"javascript.validate.enable": true,
+"eslint.enable": false,
+"tslint.enable": true,
+"cSpell.enabled": true
 }

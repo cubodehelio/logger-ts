@@ -1,6 +1,5 @@
 
-import * as uuid from "node-uuid";
-import {ExpressRequest, ExpressResponse} from "./types";
+import {ExpressRequest, ExpressResponse} from './types';
 
 /**
  * Get request IP address.
@@ -13,54 +12,54 @@ function getIp(req): string {
   return req.ip
     || req._remoteAddress
     || (req.connection && req.connection.remoteAddress)
-    || "no-remote-addr";
+    || 'no-remote-addr';
 }
 
 export default class HttpContext {
 
   constructor(private req: ExpressRequest, private res: ExpressResponse) { }
 
-  url() {
+  public url() {
     return this.req.originalUrl || this.req.url;
   }
 
-  method() {
+  public method() {
     return this.req.method;
   }
 
-  status(): string {
-    return this.res._header ? String(this.res.statusCode) : "no-status";
+  public status(): string {
+    return this.res._header ? String(this.res.statusCode) : 'no-status';
   }
 
 
-  referrer() {
-    return this.req.get("referer") || this.req.get("referrer");
+  public referrer() {
+    return this.req.get('referer') || this.req.get('referrer');
   }
 
   /**
    * remote address
    */
 
-  remoteAddr() {
-    return getIp(this.req).replace("::ffff:", "");
+  public remoteAddr() {
+    return getIp(this.req).replace('::ffff:', '');
   }
 
-  httpVersion(): string {
-    return this.req.httpVersionMajor + "." + this.req.httpVersionMinor;
+  public httpVersion(): string {
+    return this.req.httpVersionMajor + '.' + this.req.httpVersionMinor;
   }
 
-  userAgent() {
-    return this.req.get("user-agent");
+  public userAgent() {
+    return this.req.get('user-agent');
   }
 
-  reqHeader(field) {
+  public reqHeader(field) {
     // get header
     let header = this.req.get[field]
 
-    return Array.isArray(header) ? header.join(", ") : header
+    return Array.isArray(header) ? header.join(', ') : header
   }
 
-  resHeader(field) {
+  public resHeader(field) {
     if (!this.res._header) {
       return undefined;
     }
@@ -68,7 +67,7 @@ export default class HttpContext {
     let header: string | Array<string>;
 
     header = this.res.get(field);
-    return Array.isArray(header) ? header.join(", ") : header;
+    return Array.isArray(header) ? header.join(', ') : header;
   }
 
-} 
+}

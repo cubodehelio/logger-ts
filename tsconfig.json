@@ -5,13 +5,16 @@
 //   - watch for changes in the source
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "moduleResolution": "node",
     "outDir": "dist",
-    "watch": true
+    "watch": true,
+    "strictNullChecks": true,
+    "noImplicitAny": false,
+    "declaration": true
   },
   "exclude": [
     "node_modules",

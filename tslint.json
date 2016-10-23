@@ -5,13 +5,15 @@
    * - the name of an NPM module which has a "main" file that exports a config object
    * - a relative path to a JSON file
    */
-  // "extends": "tslint:recomended",
+  "extends": "tslint:latest",
   "rules": {
     /*
      * Any rules specified here will override those from the base config we are extending
      */
     "no-constructor-vars": false,
-    "quotemark": [true, "double", "avoid-escape"]
+    "quotemark": [true, "single", "avoid-escape"],
+    "only-arrow-functions": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
   },
   "rulesDirectory": [
     /*
