@@ -1,7 +1,7 @@
-import Logger from "./lib/Logger";
+import Logger from './lib/Logger';
 
-export function logger (){
+export function logger () {
   return new Logger();
 }
 
-export {middleware} from "./lib/Middleware";
+export {middleware} from './lib/Middleware';

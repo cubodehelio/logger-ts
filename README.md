@@ -1,41 +1,51 @@
-#ts-logger
+# ts-logger
 
 An experimental logger library for NodeJS written in TypeScript (__working progress__).
 
-## Use
+## Usage
 
 ```sh
 $ npm install ts-logger
 ```
 
-## Development
+```js
+/* methods: error/err | warn/warning | info | log | debug | silly */
+const logger = require("ts-logger").logger();
 
-* Clone this repo `git clone https://github.com/cubodehelio/ts-logger.git`.
-* Install deps: `npm install`
-* typings install
+logger.error("I'm an error");
+logger.err("I'm also an error");
 
-## Transpile
+const err = new Error("oh noo!!");
+logger.err(err);
+logger.err("an error was fired!", err);
+logger.warn("an error was fired!", err.message);
 
-Using `tsconfig.json` in the project root
+logger.log("one", 2,3, [4, 'five'], {six: 'seven', eight: [9, 10, '...']});
 
-```sh
-$ node_modules/typescript/bin/tsc -p .
 ```
 
+## ANSI colors support.
+The library automatically detects whether colors are supported by the output environment. However you can **enable/disable** this feature by launching your programs with the following flags respectively: `--color` or `--no-color`.
 
-## Development in Visual Studio Code
 
-+ Install `typings` globally in your system: `npm install typings -g`
-+ Install the TypeScript definitions for the project running `typings install` command in the root.
-+ Once in VSC you can build (and watch for changes) the code with `ctrl+shift+b` (`ctrl+shift+h` to see the output).
+## Express middleware
+A basic middleware to be mounted on express which output has a specific format. For every request the middleware prints two messages one for the request (`:access_uuid <== :method :url :remoteAddr :httpVersion :userAgent`) an the other for the response (`:access_uuid ==> :status :length :elapsed`).
 
-By now the vsc build task just fires `tcs -p .` command in the project root, which reads settings from `tsconfig.json` file.
+```js
+const Logger = require('ts-logger'),
+    logger = Logger.logger();
 
--------------------------------------------------------------------------------
+logger.silly("Init app.js");
 
-## TODO
+const express = require('express'),
+  app = express();
 
-+ Extend `ExpressRequest` type from node IncommingMessage (?).
-+ Extend `ExpressResponse` type from node ServerResponse (?).
-+ Make Grunt based build system for transpilation, release, etc..
-+ Should the traspilation be made with babel?
+// it is important that this two express middlewares stay above of the logger one..
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Logger
+app.use(Logger.middleware());
+
+// ...
+```

@@ -1,6 +1,5 @@
-
-import * as uuid from "node-uuid";
-import {ExpressRequest, ExpressResponse} from "./types";
+import { IExpressResponse } from './common-types';
+import * as express from 'express';
 
 /**
  * Get request IP address.
@@ -13,27 +12,26 @@ function getIp(req): string {
   return req.ip
     || req._remoteAddress
     || (req.connection && req.connection.remoteAddress)
-    || "no-remote-addr";
+    || 'no-remote-addr';
 }
 
 export default class HttpContext {
 
-  constructor(private req: ExpressRequest, private res: ExpressResponse) { }
+  constructor(private req: express.Request, private res: IExpressResponse) { }
 
-  url() {
+  public url() {
     return this.req.originalUrl || this.req.url;
   }
 
-  method() {
+  public method() {
     return this.req.method;
   }
 
-  status(): string {
-    return this.res._header ? String(this.res.statusCode) : "no-status";
+  public status(): string {
+    return this.res._header ? String(this.res.statusCode) : 'no-status';
   }
 
-
-  referrer() {
+  public referrer() {
     return this.req.get('referer') || this.req.get('referrer');
   }
 
@@ -41,26 +39,26 @@ export default class HttpContext {
    * remote address
    */
 
-  remoteAddr() {
-    return getIp(this.req).replace('::ffff:', "");
+  public remoteAddr() {
+    return getIp(this.req).replace('::ffff:', '');
   }
 
-  httpVersion(): string {
+  public httpVersion(): string {
     return this.req.httpVersionMajor + '.' + this.req.httpVersionMinor;
   }
 
-  userAgent() {
+  public userAgent() {
     return this.req.get('user-agent');
   }
 
-  reqHeader(field) {
+  public reqHeader(field) {
     // get header
-    let header = this.req.get[field]
+    let header = this.req.get[field];
 
-    return Array.isArray(header) ? header.join(', ') : header
+    return Array.isArray(header) ? header.join(', ') : header;
   }
 
-  resHeader(field) {
+  public resHeader(field) {
     if (!this.res._header) {
       return undefined;
     }
@@ -71,4 +69,4 @@ export default class HttpContext {
     return Array.isArray(header) ? header.join(', ') : header;
   }
 
-} 
+}

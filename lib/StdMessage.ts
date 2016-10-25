@@ -1,134 +1,146 @@
-import {inspect} from "util";
-import {basename} from "path";
+import { IStackData, getStackData } from './getStackData';
 import * as chalk from 'chalk';
+import isError = require('lodash.iserror');
+import { inspect } from 'util';
 
-import {LogType, std, StackData} from "./types";
+/**
+ * Available levels for the logger
+ */
+export type LogType = 'ERROR' | 'WARN' | 'INFO' | 'LOG' | 'DEBUG' | 'SILLY';
 
-const isError = require("lodash.iserror");
+/**
+ * Declare the NodeJS standard outputs.
+ */
+export type std = 'out' | 'err';
 
-function getStackData(stackOffset: number): StackData {
-  stackOffset = stackOffset || 0;
-
-  let stackReg = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i,
-    stackReg2 = /at\s+()(.*):(\d*):(\d*)/i,
-    stacklist = (new Error()).stack.split('\n'),
-
-    s = stacklist[stackOffset] || stacklist[0],
-    sp = stackReg.exec(s) || stackReg2.exec(s)
-
-  let data: StackData = {
-    method: "",
-    fullPath: "",
-    path: "",
-    line: 0,
-    pos: 0,
-    file: "",
-    stack: [],
-  }
-
-  if (sp && sp.length === 5) {
-    data.method = sp[1];
-    data.fullPath = sp[2];
-    data.path = sp[2].replace(process.cwd() + "/", "");
-    data.line = parseInt(sp[3]);
-    data.pos = parseInt(sp[4]);
-    data.file = basename(data.path);
-    data.stack = stacklist;
-  }
-
-  return data;
-}
-
-
-export default class StdMessage {
+/**
+ * Gives format to the log messages.
+ *
+ * @export
+ * @class StdMessage
+ */
+export class StdMessage {
 
   public date: Date;
   public type: LogType;
   public messages: Array<any>;
-  public errors: Array<any>;
+  public errors: Array<Error>;
   public std: std;
-  public stackData: StackData;
+  public stackData: IStackData;
 
-  private lines = [];
-
+  /**
+   * Creates an instance of StdMessage.
+   *
+   * @param {LogType} type
+   * @param {...Array<any>} messages
+   *
+   * @memberOf StdMessage
+   */
   constructor(type: LogType, ...messages: Array<any>) {
     this.type = type;
     this.date = new Date();
     this.messages = messages;
     this.errors = messages.filter(isError);
-    this.std = (type === "ERROR" || type === "WARN") ? "err" : "out";
+    this.std = (type === 'ERROR' || type === 'WARN') ? 'err' : 'out';
     this.stackData = getStackData(4);
 
-    if (this.type !== "INFO") {
+    if (this.type !== 'INFO') {
       messages.push(`(\`${this.stackData.file}\` line:${this.stackData.line})`);
     }
   }
 
-  public toString() {
+  /**
+   * Get the output channel name. Can be either `stdout` or `stderr`
+   *
+   * @returns {string}
+   *
+   * @memberOf StdMessage
+   */
+  public getChannel(): string {
+    return `std${this.std}`;
+  }
 
-    let strMsg = [];
-    let message = "";
+  /**
+   * Serialize the StdMessage instance to string.
+   *
+   * @returns {string}
+   *
+   * @memberOf StdMessage
+   */
+  public toString(): string {
+
+    let message = '';
     let inspectDepth = 10;
 
     this.messages.forEach(msg => {
 
       if (isError(msg)) {
         msg = chalk.red(inspect(msg, { depth: inspectDepth }));
-      }
-      else {
-        // avoid inspecting strings so we dont lose format
-        msg = (typeof msg === 'string') ? chalk.green(msg) : inspect(msg, { colors: chalk.supportsColor, depth: inspectDepth });
+      } else {
+        // avoid inspecting strings so we don't lose format
+        msg = (typeof msg === 'string')
+          ? chalk.green(msg)
+          : inspect(msg, { colors: chalk.supportsColor, depth: inspectDepth });
       }
 
-      message = message.concat(msg).concat(" ");
+      message = message.concat(msg).concat(' ');
     });
 
-    message = message.concat("\n").replace(/'/g, "");
+    message = message.concat('\n').replace(/'/g, '');
 
     if (this.errors.length) {
       this.errors.forEach(err => {
-        message = message.concat(chalk.red(err.stack)).concat("\n");
+        let stack: string = err.stack || '';
+        message = message.concat(chalk.red(stack)).concat('\n');
       });
     }
 
     return `${this.date.toISOString()} ${this.formatedType()} ${message}`;
   }
 
-  private formatedType() {
+  /**
+   * Add colors to the `type` part of the message plus a leading `:` char.
+   *
+   * @private
+   * @returns {string}
+   *
+   * @memberOf StdMessage
+   */
+  private formatedType(): string {
 
     let formatedType: string;
 
     switch (this.type) {
-      case "ERROR":
+      case 'ERROR':
         formatedType = chalk.red(this.type);
         break;
 
-      case "WARN":
+      case 'WARN':
         formatedType = chalk.yellow(this.type);
         break;
 
-      case "INFO":
+      case 'INFO':
         formatedType = chalk.blue(this.type);
         break;
 
-      case "LOG":
+      case 'LOG':
         formatedType = chalk.cyan(this.type);
         break;
 
-      case "DEBUG":
+      case 'DEBUG':
         formatedType = chalk.magenta(this.type);
         break;
 
-      case "SILLY":
+      case 'SILLY':
         formatedType = chalk.gray(this.type);
         break;
 
       default:
-        formatedType = this.type
+        formatedType = this.type;
         break;
     }
 
-    return formatedType.concat(":");
+    return formatedType.concat(':');
 
   }
 }
