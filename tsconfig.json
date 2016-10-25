@@ -11,7 +11,7 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "outDir": "dist",
-    "watch": true,
+    "watch": false,
     "strictNullChecks": true,
     "noImplicitAny": false,
     "declaration": true

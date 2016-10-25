@@ -1,56 +1,41 @@
+import { IStackData, getStackData } from './getStackData';
 import * as chalk from 'chalk';
-import {basename} from 'path';
-import {inspect} from 'util';
-
-import {LogType, StackData, std } from './types';
-
 import isError = require('lodash.iserror');
+import { inspect } from 'util';
 
-function getStackData(stackOffset: number): StackData {
-  stackOffset = stackOffset || 0;
+/**
+ * Available levels for the logger
+ */
+export type LogType = 'ERROR' | 'WARN' | 'INFO' | 'LOG' | 'DEBUG' | 'SILLY';
 
-  let stackReg = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i;
-  let stackReg2 = /at\s+()(.*):(\d*):(\d*)/i;
-  let stacklist = (new Error()).stack.split('\n');
+/**
+ * Declare the NodeJS standard outputs.
+ */
+export type std = 'out' | 'err';
 
-  let s = stacklist[stackOffset] || stacklist[0];
-  let sp = stackReg.exec(s) || stackReg2.exec(s);
-
-  let data: StackData = {
-    file: '',
-    fullPath: '',
-    line: 0,
-    method: '',
-    path: '',
-    pos: 0,
-    stack: [],
-  }
-
-  if (sp && sp.length === 5) {
-    data.method = sp[1];
-    data.fullPath = sp[2];
-    data.path = sp[2].replace(process.cwd() + '/', '');
-    data.line = parseInt(sp[3], 10);
-    data.pos = parseInt(sp[4], 10);
-    data.file = basename(data.path);
-    data.stack = stacklist;
-  }
-
-  return data;
-}
-
-
-export default class StdMessage {
+/**
+ * Gives format to the log messages.
+ *
+ * @export
+ * @class StdMessage
+ */
+export class StdMessage {
 
   public date: Date;
   public type: LogType;
   public messages: Array<any>;
-  public errors: Array<any>;
+  public errors: Array<Error>;
   public std: std;
-  public stackData: StackData;
+  public stackData: IStackData;
 
-  private lines = [];
-
+  /**
+   * Creates an instance of StdMessage.
+   *
+   * @param {LogType} type
+   * @param {...Array<any>} messages
+   *
+   * @memberOf StdMessage
+   */
   constructor(type: LogType, ...messages: Array<any>) {
     this.type = type;
     this.date = new Date();
@@ -64,9 +49,26 @@ export default class StdMessage {
     }
   }
 
-  public toString() {
+  /**
+   * Get the output channel name. Can be either `stdout` or `stderr`
+   *
+   * @returns {string}
+   *
+   * @memberOf StdMessage
+   */
+  public getChannel(): string {
+    return `std${this.std}`;
+  }
 
-    let strMsg = [];
+  /**
+   * Serialize the StdMessage instance to string.
+   *
+   * @returns {string}
+   *
+   * @memberOf StdMessage
+   */
+  public toString(): string {
+
     let message = '';
     let inspectDepth = 10;
 
@@ -88,14 +90,23 @@ export default class StdMessage {
 
     if (this.errors.length) {
       this.errors.forEach(err => {
-        message = message.concat(chalk.red(err.stack)).concat('\n');
+        let stack: string = err.stack || '';
+        message = message.concat(chalk.red(stack)).concat('\n');
       });
     }
 
     return `${this.date.toISOString()} ${this.formatedType()} ${message}`;
   }
 
-  private formatedType() {
+  /**
+   * Add colors to the `type` part of the message plus a leading `:` char.
+   *
+   * @private
+   * @returns {string}
+   *
+   * @memberOf StdMessage
+   */
+  private formatedType(): string {
 
     let formatedType: string;
 

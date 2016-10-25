@@ -1,57 +1,51 @@
-#ts-logger
+# ts-logger
 
 An experimental logger library for NodeJS written in TypeScript (__working progress__).
 
--------------------------------------------------------------------------------
-**v0.2.0-alpha1** has a very basic experimental support for writing logs to files. This can be enabled using the flag `--tslogger-file "cwd/relative/path"`.
-
-* The directory MUST exist.
-* Logs files are recreated when the process start (messages are not appended!).
-* Use: `$ node program.js --tslogger-file "my/logs.log" --no-colors`.
-------------------------------------------------------------------------------- 
-
-## Use
+## Usage
 
 ```sh
 $ npm install ts-logger
 ```
 
 ```js
+/* methods: error/err | warn/warning | info | log | debug | silly */
 const logger = require("ts-logger").logger();
 
-/* methdos: error/err | warn/warning | info | log | debug | silly */
-logger.log("hello world");
+logger.error("I'm an error");
+logger.err("I'm also an error");
+
+const err = new Error("oh noo!!");
+logger.err(err);
+logger.err("an error was fired!", err);
+logger.warn("an error was fired!", err.message);
+
+logger.log("one", 2,3, [4, 'five'], {six: 'seven', eight: [9, 10, '...']});
 
 ```
 
-## Development
+## ANSI colors support.
+The library automatically detects whether colors are supported by the output environment. However you can **enable/disable** this feature by launching your programs with the following flags respectively: `--color` or `--no-color`.
 
-* Clone this repo `git clone https://github.com/cubodehelio/ts-logger.git`.
-* Install deps: `npm install`
-* typings install
 
-## Transpile
+## Express middleware
+A basic middleware to be mounted on express which output has a specific format. For every request the middleware prints two messages one for the request (`:access_uuid <== :method :url :remoteAddr :httpVersion :userAgent`) an the other for the response (`:access_uuid ==> :status :length :elapsed`).
 
-Using `tsconfig.json` in the project root
+```js
+const Logger = require('ts-logger'),
+    logger = Logger.logger();
 
-```sh
-$ node_modules/typescript/bin/tsc -p .
+logger.silly("Init app.js");
+
+const express = require('express'),
+  app = express();
+
+// it is important that this two express middlewares stay above of the logger one..
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Logger
+app.use(Logger.middleware());
+
+// ...
 ```
-
-
-## Development in Visual Studio Code
-
-+ Install `typings` globally in your system: `npm install typings -g`
-+ Install the TypeScript definitions for the project running `typings install` command in the root.
-+ Once in VSC you can build (and watch for changes) the code with `ctrl+shift+b` (`ctrl+shift+h` to see the output).
-
-By now the vsc build task just fires `tcs -p .` command in the project root, which reads settings from `tsconfig.json` file.
-
--------------------------------------------------------------------------------
-
-## TODO
-
-+ Extend `ExpressRequest` type from node IncommingMessage (?).
-+ Extend `ExpressResponse` type from node ServerResponse (?).
-+ Make Grunt based build system for transpilation, release, etc..
-+ Should the traspilation be made with babel?

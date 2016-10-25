@@ -1,5 +1,5 @@
-
-import {ExpressRequest, ExpressResponse} from './types';
+import { IExpressResponse } from './common-types';
+import * as express from 'express';
 
 /**
  * Get request IP address.
@@ -17,7 +17,7 @@ function getIp(req): string {
 
 export default class HttpContext {
 
-  constructor(private req: ExpressRequest, private res: ExpressResponse) { }
+  constructor(private req: express.Request, private res: IExpressResponse) { }
 
   public url() {
     return this.req.originalUrl || this.req.url;
@@ -30,7 +30,6 @@ export default class HttpContext {
   public status(): string {
     return this.res._header ? String(this.res.statusCode) : 'no-status';
   }
-
 
   public referrer() {
     return this.req.get('referer') || this.req.get('referrer');
@@ -54,9 +53,9 @@ export default class HttpContext {
 
   public reqHeader(field) {
     // get header
-    let header = this.req.get[field]
+    let header = this.req.get[field];
 
-    return Array.isArray(header) ? header.join(', ') : header
+    return Array.isArray(header) ? header.join(', ') : header;
   }
 
   public resHeader(field) {

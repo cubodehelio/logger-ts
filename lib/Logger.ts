@@ -1,11 +1,4 @@
-import Middleware from './Middleware';
-import StdMessage from './StdMessage';
-import * as fs from 'fs';
-
-/**
- * Declare the NodeJS standard outputs.
- */
-type std = 'out' | 'err';
+import { StdMessage} from './StdMessage';
 
 /**
  * Declare and exposes the Logger constructor.
@@ -15,84 +8,120 @@ type std = 'out' | 'err';
  */
 export default class Logger {
 
-  private fstream: fs.WriteStream;
+  /**
+   * Creates an instance of Logger.
+   *
+   *
+   * @memberOf Logger
+   */
+  constructor() { }
 
-  constructor(tofile?: string) {
-
-    if (tofile) {
-
-      this.fstream = fs.createWriteStream(tofile, 'utf8');
-      this.fstream.on('error', (err) => {
-
-        throw err;
-
-      });
-
-    }
-  }
-
-  public error(...messages) {
-    let message = new StdMessage('ERROR', ...messages);
+  /**
+   * sends a message to the standard error.
+   *
+   * @param {any} messages
+   *
+   * @memberOf Logger
+   */
+  public error(...messages): void {
+    let message: StdMessage = new StdMessage('ERROR', ...messages);
     this.print(message);
-  }
-
-  public warn(...messages) {
-    let message = new StdMessage('WARN', ...messages);
-    this.print(message);
-  }
-
-  public info(...messages) {
-    let message = new StdMessage('INFO', ...messages);
-    this.print(message);
-  }
-
-  public log(...messages) {
-    let message = new StdMessage('LOG', ...messages);
-    this.print(message);
-  }
-
-  public debug(...messages) {
-    let message = new StdMessage('DEBUG', ...messages);
-    this.print(message);
-  }
-
-  public silly(...messages) {
-    let message = new StdMessage('SILLY', ...messages);
-    this.print(message);
-  }
-
-  public err(...messages){
-    return this.error(...messages);
-  }
-
-  public warning(...messages){
-    return this.warn(...messages);
-  }
-
-  public middleware(){
-
   }
 
   /**
-   * Set the console method that will be used to send the message out
-   * and pass it to the print method
+   * sends a message to the standard error.
+   *
+   * @param {any} messages
+   *
+   * @memberOf Logger
+   */
+  public warn(...messages): void {
+    let message: StdMessage = new StdMessage('WARN', ...messages);
+    this.print(message);
+  }
+
+  /**
+   * sends a message to the standard output.
+   *
+   * @param {any} messages
+   *
+   * @memberOf Logger
+   */
+  public info(...messages): void {
+    let message: StdMessage = new StdMessage('INFO', ...messages);
+    this.print(message);
+  }
+
+  /**
+   * sends a message to the standard output.
+   *
+   * @param {any} messages
+   *
+   * @memberOf Logger
+   */
+  public log(...messages): void {
+    let message: StdMessage = new StdMessage('LOG', ...messages);
+    this.print(message);
+  }
+
+  /**
+   * sends a message to the standard output.
+   *
+   * @param {any} messages
+   *
+   * @memberOf Logger
+   */
+  public debug(...messages): void {
+    let message: StdMessage = new StdMessage('DEBUG', ...messages);
+    this.print(message);
+  }
+
+  /**
+   * sends a message to the standard output.
+   *
+   * @param {any} messages
+   *
+   * @memberOf Logger
+   */
+  public silly(...messages): void {
+    let message: StdMessage = new StdMessage('SILLY', ...messages);
+    this.print(message);
+  }
+
+  /**
+   * sends a message to the standard error.
+   *
+   * @param {any} messages
+   * @returns {void}
+   *
+   * @memberOf Logger
+   */
+  public err(...messages): void {
+    return this.error(...messages);
+  }
+
+  /**
+   * sends a message to the standard error.
+   *
+   * @param {any} messages
+   * @returns {void}
+   *
+   * @memberOf Logger
+   */
+  public warning(...messages): void {
+    return this.warn(...messages);
+  }
+
+  /**
+   * Write the final string to the process stdOut or stdErr.
    *
    * @private
-   * @param {LoggerLevel} loggerLevel (description)
-   * @param parameters rest parameters you want to log
+   * @param {StdMessage} stdMessage
+   *
+   * @memberOf Logger
    */
-  private print(stdMessage: StdMessage) {
-
-    if (this.fstream) {
-
-      this.fstream.write(stdMessage.toString());
-
-    } else {
-
-      let processStream = 'std' + stdMessage.std;
-      process[processStream].write(stdMessage.toString());
-
-    }
+  private print(stdMessage: StdMessage): void {
+    process[stdMessage.getChannel()].write(stdMessage.toString());
 
   }
 
