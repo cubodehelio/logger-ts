@@ -8,6 +8,7 @@
     "add-types": "bash types.sh",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run add-types && npm run transpile",
+    "postinstall": "npm run add-types && npm run transpile",
     "transpile": "rm dist -rf && node_modules/typescript/bin/tsc -p ."
   },
   "repository": {
