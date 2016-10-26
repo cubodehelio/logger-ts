@@ -1,3 +1,8 @@
+# v0.3.1
+
++ fix `.npmignore` issues.
++ add `typescript` as a prod dependency (the module should be compiled on the client when install from github).
+
 # v0.3.0
 
 + update `README.md`.
