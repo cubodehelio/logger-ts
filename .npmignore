@@ -1,12 +1,7 @@
 node_modules
 .vscode
-/lib
-index.ts
 /typings
-.vscode
 tsconfig.*
 typings.json
-dist/**/*.ts
-!dist/types.d.ts
+dist
 logs
-dist/**/*.map
