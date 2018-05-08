@@ -1,6 +1,6 @@
 import Logger from './lib/Logger';
 
-export function logger () {
+export function logger() {
   return new Logger();
 }
 

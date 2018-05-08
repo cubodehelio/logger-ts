@@ -53,7 +53,7 @@ export default class HttpContext {
 
   public reqHeader(field) {
     // get header
-    let header = this.req.get[field];
+    const header = this.req.get[field];
 
     return Array.isArray(header) ? header.join(', ') : header;
   }
@@ -63,7 +63,7 @@ export default class HttpContext {
       return undefined;
     }
 
-    let header: string | Array<string>;
+    let header: string | string[];
 
     header = this.res.get(field);
     return Array.isArray(header) ? header.join(', ') : header;

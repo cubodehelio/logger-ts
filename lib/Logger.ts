@@ -9,14 +9,6 @@ import { StdMessage} from './StdMessage';
 export default class Logger {
 
   /**
-   * Creates an instance of Logger.
-   *
-   *
-   * @memberOf Logger
-   */
-  constructor() { }
-
-  /**
    * sends a message to the standard error.
    *
    * @param {any} messages
@@ -24,7 +16,7 @@ export default class Logger {
    * @memberOf Logger
    */
   public error(...messages): void {
-    let message: StdMessage = new StdMessage('ERROR', ...messages);
+    const message: StdMessage = new StdMessage('ERROR', ...messages);
     this.print(message);
   }
 
@@ -36,7 +28,7 @@ export default class Logger {
    * @memberOf Logger
    */
   public warn(...messages): void {
-    let message: StdMessage = new StdMessage('WARN', ...messages);
+    const message: StdMessage = new StdMessage('WARN', ...messages);
     this.print(message);
   }
 
@@ -48,7 +40,7 @@ export default class Logger {
    * @memberOf Logger
    */
   public info(...messages): void {
-    let message: StdMessage = new StdMessage('INFO', ...messages);
+    const message: StdMessage = new StdMessage('INFO', ...messages);
     this.print(message);
   }
 
@@ -60,7 +52,7 @@ export default class Logger {
    * @memberOf Logger
    */
   public log(...messages): void {
-    let message: StdMessage = new StdMessage('LOG', ...messages);
+    const message: StdMessage = new StdMessage('LOG', ...messages);
     this.print(message);
   }
 
@@ -72,7 +64,7 @@ export default class Logger {
    * @memberOf Logger
    */
   public debug(...messages): void {
-    let message: StdMessage = new StdMessage('DEBUG', ...messages);
+    const message: StdMessage = new StdMessage('DEBUG', ...messages);
     this.print(message);
   }
 
@@ -84,7 +76,7 @@ export default class Logger {
    * @memberOf Logger
    */
   public silly(...messages): void {
-    let message: StdMessage = new StdMessage('SILLY', ...messages);
+    const message: StdMessage = new StdMessage('SILLY', ...messages);
     this.print(message);
   }
 

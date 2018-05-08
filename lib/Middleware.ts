@@ -19,11 +19,11 @@ export interface IExpressRequest extends express.Request {
  */
 export function middleware(): express.Handler {
 
-  let logger: Logger = new Logger();
+  const logger: Logger = new Logger();
 
   return (req: IExpressRequest, res: IExpressResponse, next: NextFn) => {
-    let startTime = new Date().getTime();
-    let ctx = new HttpContext(req, res);
+    const startTime = new Date().getTime();
+    const ctx = new HttpContext(req, res);
 
     req.access_uuid = uuid.v4();
 
@@ -31,7 +31,7 @@ export function middleware(): express.Handler {
     logger.info(`[${req.access_uuid}] <== '${ctx.method()} ${ctx.url()}' ${ctx.remoteAddr()} HTTP/${ctx.httpVersion()} ${ctx.userAgent()}`);
 
     onFinished(res, (err) => {
-      let reqTime = ((new Date().getTime()) - startTime) / 1000;
+      const reqTime = ((new Date().getTime()) - startTime) / 1000;
 
       // tslint:disable-next-line
       // _debugger.info(`${ctx.remoteAddr()}- '${ctx.method()} ${ctx.url()} HTTP/${ctx.httpVersion()}' ${ctx.status()} ${ctx.resHeader('content-length')} ${ctx.userAgent()}`);

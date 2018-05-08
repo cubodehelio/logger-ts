@@ -15,7 +15,7 @@ export function getStackData(stackOffset: number): IStackData {
   let stackReg2: RegExp;
   let error: Error;
   let errorStack: string;
-  let stackList: Array<string>;
+  let stackList: string[];
 
   stackReg = /at\s+(.*)\s+\((.*):(\d*):(\d*)\)/i;
   stackReg2 = /at\s+()(.*):(\d*):(\d*)/i;
@@ -24,10 +24,10 @@ export function getStackData(stackOffset: number): IStackData {
 
   stackList = errorStack.split('\n');
 
-  let s = stackList[stackOffset] || stackList[0];
-  let sp = stackReg.exec(s) || stackReg2.exec(s);
+  const s = stackList[stackOffset] || stackList[0];
+  const sp = stackReg.exec(s) || stackReg2.exec(s);
 
-  let data: IStackData = {
+  const data: IStackData = {
     file: '',
     fullPath: '',
     line: 0,
@@ -63,5 +63,5 @@ export interface IStackData {
   line: number;
   pos: number;
   file: string;
-  stack: Array<string>;
+  stack: string[];
 }

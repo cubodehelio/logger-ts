@@ -1,7 +1,7 @@
-import { IStackData, getStackData } from './getStackData';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import isError = require('lodash.iserror');
 import { inspect } from 'util';
+import { getStackData, IStackData } from './getStackData';
 
 /**
  * Available levels for the logger
@@ -23,8 +23,8 @@ export class StdMessage {
 
   public date: Date;
   public type: LogType;
-  public messages: Array<any>;
-  public errors: Array<Error>;
+  public messages: any[];
+  public errors: Error[];
   public std: std;
   public stackData: IStackData;
 
@@ -36,7 +36,7 @@ export class StdMessage {
    *
    * @memberOf StdMessage
    */
-  constructor(type: LogType, ...messages: Array<any>) {
+  constructor(type: LogType, ...messages: any[]) {
     this.type = type;
     this.date = new Date();
     this.messages = messages;
@@ -70,9 +70,10 @@ export class StdMessage {
   public toString(): string {
 
     let message = '';
-    let inspectDepth = 10;
+    const inspectDepth = 10;
+    const supportsColor = chalk.supportsColor.level > 0;
 
-    this.messages.forEach(msg => {
+    this.messages.forEach((msg) => {
 
       if (isError(msg)) {
         msg = chalk.red(inspect(msg, { depth: inspectDepth }));
@@ -80,7 +81,7 @@ export class StdMessage {
         // avoid inspecting strings so we don't lose format
         msg = (typeof msg === 'string')
           ? chalk.green(msg)
-          : inspect(msg, { colors: chalk.supportsColor, depth: inspectDepth });
+          : inspect(msg, { colors: supportsColor, depth: inspectDepth });
       }
 
       message = message.concat(msg).concat(' ');
@@ -89,8 +90,8 @@ export class StdMessage {
     message = message.concat('\n').replace(/'/g, '');
 
     if (this.errors.length) {
-      this.errors.forEach(err => {
-        let stack: string = err.stack || '';
+      this.errors.forEach((err) => {
+        const stack: string = err.stack || '';
         message = message.concat(chalk.red(stack)).concat('\n');
       });
     }
